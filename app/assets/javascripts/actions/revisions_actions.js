@@ -1,12 +1,19 @@
-import { RECEIVE_REVISIONS, SORT_REVISIONS, FILTER_COURSE_SPECIFIC_REVISIONS, API_FAIL } from '../constants';
+import {
+  RECEIVE_REVISIONS,
+  REVISIONS_LOADING,
+  RECEIVE_COURSE_SCOPED_REVISIONS,
+  COURSE_SCOPED_REVISIONS_LOADING,
+  SORT_REVISIONS,
+  API_FAIL
+} from '../constants';
 import { fetchWikidataLabelsForRevisions } from './wikidata_actions';
 import logErrorMessage from '../utils/log_error_message';
 
-const fetchRevisionsPromise = (courseId, limit) => {
+const fetchRevisionsPromise = (courseId, limit, isCourseScoped) => {
   return new Promise((res, rej) => {
     return $.ajax({
       type: 'GET',
-      url: `/courses/${courseId}/revisions.json?limit=${limit}`,
+      url: `/courses/${courseId}/revisions.json?limit=${limit}&course_scoped=${isCourseScoped}`,
       success(data) {
         return res(data);
       }
@@ -18,12 +25,20 @@ const fetchRevisionsPromise = (courseId, limit) => {
   });
 };
 
-export const fetchRevisions = (courseId, limit) => (dispatch) => {
+export const fetchRevisions = (courseId, limit, isCourseScoped = false) => (dispatch) => {
+  let actionType;
+  if (isCourseScoped) {
+    actionType = RECEIVE_COURSE_SCOPED_REVISIONS;
+    dispatch({ type: COURSE_SCOPED_REVISIONS_LOADING });
+  } else {
+    actionType = RECEIVE_REVISIONS;
+    dispatch({ type: REVISIONS_LOADING });
+  }
   return (
-    fetchRevisionsPromise(courseId, limit)
+    fetchRevisionsPromise(courseId, limit, isCourseScoped)
       .then((resp) => {
         dispatch({
-          type: RECEIVE_REVISIONS,
+          type: actionType,
           data: resp,
           limit: limit
         });
@@ -36,5 +51,3 @@ export const fetchRevisions = (courseId, limit) => (dispatch) => {
 };
 
 export const sortRevisions = key => ({ type: SORT_REVISIONS, key: key });
-
-export const filterCourseSpecificRevisions = key => ({ type: FILTER_COURSE_SPECIFIC_REVISIONS, key: key });

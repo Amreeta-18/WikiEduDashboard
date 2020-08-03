@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.5.0'
+ruby '2.7.1'
 
 ### Basic Framework
 gem 'rails', '6.0.3.2'
@@ -111,7 +111,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'byebug'
   gem 'rspec-rails'
-  gem 'rubocop', require: false
+  gem 'rubocop',  require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec-focused', require: false
   gem 'rubocop-rspec', require: false
