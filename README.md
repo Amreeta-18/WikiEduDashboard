@@ -52,4 +52,4 @@ This project welcomes contributions, and we try to be as newbie-friendly as poss
 Translations for the Wiki Education Dashboard interface are handled through [translatewiki.net](https://translatewiki.net/wiki/Translating:Wiki_Ed_Dashboard).
 
 ### Code of Conduct
-This project is part of the Wikimedia technical ecosystem and follows the [Wikimedia Code of Conduct](https://www.mediawiki.org/wiki/Code_of_Conduct).
+This project is part of the Wikimedia technical ecosystem and follows the [Wikimedia Code of Conduct](https://www.mediawiki.org/wiki/Code_of_Conduct). 
